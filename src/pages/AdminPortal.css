@@ -1,0 +1,140 @@
+/* General Page Styles */
+body {
+    margin: 0;
+    background-color: black;
+    color: white;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Admin Portal Container */
+.admin-portal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+/* Header Styling */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #171717;
+}
+
+/* Logo as Background Image */
+.logo {
+    width: 80px;
+    height: 80px;
+    background-image: url("../assets/logo.png"); /* Ensure correct path */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Admin Title */
+.admin-title {
+    font-size: 24px;
+    font-weight: bold;
+    background-color: white;
+    color: black;
+    padding: 10px 25px;
+    border-radius: 15px;
+}
+
+/* Navigation Bar */
+.nav {
+    display: flex;
+    gap: 15px;
+}
+
+.nav button {
+    background: red;
+    color: white;
+    border: 2px solid white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.nav button:hover {
+    background: white;
+    color: black;
+}
+
+/* Logout Button */
+.logout {
+    background: red;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.logout:hover {
+    background: darkred;
+}
+
+/* Main Content */
+.main-content {
+    position: relative;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+/* Center Image */
+.center-image {
+    width: 50%;
+    margin-bottom: 20px;
+}
+
+.center-image img {
+    width: 100%;
+    height: auto;
+}
+
+/* Text Elements */
+.brand-title {
+    font-size: 50px;
+    color: red;
+    margin-top: -30px;
+}
+
+.tagline {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.cta-text {
+    font-size: 20px;
+    color: cyan;
+    margin: 20px 0;
+}
+
+/* Next Button */
+.next-button {
+    font-size: 24px;
+    border: none;
+    background-color: transparent;
+    color: cyan;
+    cursor: pointer;
+    padding: 10px;
+    transition: 0.3s;
+}
+
+.next-button:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+}
