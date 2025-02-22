@@ -7,6 +7,7 @@ import SignUpPage from "./pages/SignUpPage";
 import AdminPortal from "./pages/AdminPortal";
 import AttendeePortal from "./pages/AttendeePortal";
 import EventOrganizerPortal from "./pages/EventOrganizerPortal";
+import StaffPortal from "./pages/StaffPortal";
 import PrivateRoute from "./PrivateRoute";
 
 const RedirectBasedOnRole = () => {
@@ -63,7 +64,15 @@ const App = () => {
                                 <EventOrganizerPortal />  
                             </PrivateRoute>  
                         }  
-                    />    
+                    /> 
+                    <Route  
+                        path="/staff"  
+                        element={  
+                            <PrivateRoute allowedRoles={["Staff"]}>  
+                                <StaffPortal />  
+                            </PrivateRoute>  
+                        }  
+                    />       
                     <Route path="/" element={<HomePage />} />
                 </Routes>
             </AuthProvider>
