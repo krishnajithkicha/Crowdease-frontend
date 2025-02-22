@@ -18,7 +18,9 @@ const AttendeePortal = () => {
       <header className="header">
         <div className="logo-container">
           <img src={logo} alt="Crowdease Logo" className="logo" />
+          <h2 className="portal-heading">Attendee Portal</h2>
         </div>
+    
         <nav className="nav">
           <button className="nav-button">HOME</button>
           <button className="nav-button">TRENDING</button>
