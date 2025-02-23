@@ -1,114 +1,113 @@
-/* General Styles */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background: radial-gradient(circle at bottom right, #40134a, #090a0f);
-    color: white;
-    text-align: center;
-  }
-  
-  /* Navbar */
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-  }
-  
-  .navbar ul {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    gap: 15px;
-  }
-  
-  .navbar li {
-    display: inline;
-  }
-  
-  .navbar a {
-    text-decoration: none;
-    font-weight: bold;
-    color: black;
-    background: white;
-    padding: 10px 15px;
-    border-radius: 20px;
-    transition: 0.3s ease;
-  }
-  
-  .navbar a:hover {
-    background: #ff2e2e;
-    color: white;
-  }
-  
-  /* Staff Button */
-  .staff-btn {
-    background: red;
-    color: white;
-    font-weight: bold;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-  }
-  
-  /* Hero Section */
-  .hero {
-    margin-top: 20px;
-  }
-  
-  .logo img {
-    width: 80px;
-  }
-  
-  .brand-name {
-    font-size: 32px;
-    color: red;
-    font-weight: bold;
-  }
-  
-  .tagline {
-    font-style: italic;
-    font-size: 14px;
-    color: gray;
-  }
-  
-  /* Main Content */
-  .content {
-    margin-top: 50px;
-  }
-  
-  .content h2 {
-    font-size: 28px;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: rgba(255, 255, 255, 0.7);
-  }
-  
-  /* Pattern */
-  .pattern {
-    width: 150px;
-    height: 150px;
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 20%, transparent 20%);
-    background-size: 10px 10px;
-    transform: rotate(45deg);
-    margin: 20px auto;
-  }
-  
-  /* Support Button */
-  .support-btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: transparent;
-    color: white;
-    border: 1px solid white;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .support-btn:hover {
-    background-color: white;
-    color: black;
-  }
-  
+/* General Styles */  
+body {  
+  margin: 0;  
+  padding: 0;  
+  font-family: Arial, sans-serif;  
+  background: radial-gradient(circle at bottom right, #40134a, #090a0f);  
+  color: white;  
+  text-align: center;  
+}  
+
+/* Navbar */  
+.navbar {  
+  display: flex;  
+  justify-content: space-between;  
+  align-items: center;  
+  padding: 15px;  
+  background-color: transparent; /* Make navbar transparent */  
+}  
+
+.logo {  
+  /* Add logo styling if needed */  
+}  
+
+.staff-btn {  
+  background: red;  
+  color: white;  
+  font-weight: bold;  
+  padding: 12px 20px;  
+  border: none;  
+  border-radius: 20px;  
+  cursor: pointer;  
+  margin: 0 auto; /* Center the staff button */  
+}  
+
+/* Navbar Links */  
+.navbar ul {  
+  list-style-type: none;  
+  padding: 0;  
+  display: flex;  
+  gap: 15px;  
+}  
+
+.navbar li {  
+  display: inline;  
+}  
+
+.nav-button {  
+  background: transparent;  
+  color: white;  
+  font-weight: bold;  
+  border: none;  
+  cursor: pointer;  
+  padding: 10px 15px;  
+  border-radius: 20px;  
+  transition: 0.3s ease;  
+}  
+
+.nav-button:hover {  
+  background: #ff2e2e;  
+  color: white;  
+}  
+
+/* Hero Section */  
+.hero {  
+  margin-top: 20px;  
+}  
+
+.tagline {  
+  font-style: italic;  
+  font-size: 16px; /* Adjusted for visibility */  
+  color: gray;  
+}  
+
+/* Main Content */  
+.content {  
+  margin-top: 50px;  
+  position: relative; /* For absolute positioning of pattern */  
+}  
+
+/* Main Tagline */  
+.main-tagline {  
+  font-size: 28px;  
+  text-transform: uppercase;  
+  font-weight: bold;  
+  color: rgba(255, 255, 255, 0.7);  
+  margin: 20px 0; /* Spacing */  
+}  
+
+/* Pattern */  
+.pattern {  
+  width: 150px;  
+  height: 150px;  
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 20%, transparent 20%);  
+  background-size: 10px 10px;  
+  transform: rotate(45deg);  
+  margin: 20px auto;  
+}  
+
+/* Support Button */  
+.support-btn {  
+  margin-top: 20px;  
+  padding: 10px 20px;  
+  background: transparent;  
+  color: white;  
+  border: 1px solid white;  
+  cursor: pointer;  
+  transition: 0.3s;  
+}  
+
+.support-btn:hover {  
+  background-color: white;  
+  color: black;  
+}
