@@ -1,104 +1,79 @@
-/* General Styles */  
-body {  
-    margin: 0;  
-    padding: 0;  
-    font-family: Arial, sans-serif;  
-    background-color: #111;   
-    color: white;  
-    text-align: center;  
-}  
+/* Global Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: black;
+    color: white;
+}
 
-/* Navbar */  
-.navbar {  
-    display: flex;  
-    align-items: center;  
-    justify-content: space-between;  
-    padding: 20px;  
-    background-color: transparent;  
-    border-bottom: 2px solid white;  
-}  
+/* Container */
+.portal-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
 
-.navbar .logo {  
-    display: flex;  
-    align-items: center;  
-}  
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: flex-end; /* Moves buttons to the right */
+    align-items: center;
+    padding: 20px 40px;
+    background-color: black;
+}
 
-.logo img {  
-    width: 100px; /* Adjusted logo width */  
-    margin-right: 10px; /* Spacing between logo and title */  
-}  
+/* Navigation Links */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
 
-.portal-title {  
-    font-size: 24px; /* Font size for portal title */  
-    color: white; /* Portal title color */  
-    font-weight: bold;  
-    flex-grow: 1; /* Allow title to grow to center */  
-    text-align: center; /* Center the title */  
-}  
+.nav-links button {
+    background: white;
+    border: none;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-.navbar ul {  
-    list-style-type: none;  
-    display: flex;  
-    gap: 10px; /* Space between navbar items */  
-    margin: 0; /* Reset margin */  
-}  
+.nav-links button:hover {
+    background-color: red;
+    color: white;
+}
 
-.navbar li {  
-    flex: 1; /* Allow each item to take equal space */  
-}  
+/* Main Content */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 
-.nav-button {  
-    display: block;  
-    background-color: white; /* Button color */  
-    color: black; /* Text color */  
-    padding: 10px; /* Padding for button appearance */  
-    border-radius: 5px; /* Round corners */  
-    font-weight: bold; /* Font weight */  
-    border: none; /* Remove border */  
-    cursor: pointer; /* Pointer cursor */  
-    transition: background-color 0.3s, color 0.3s; /* Transition for hover effect */  
-}  
+/* Support Button - Positioned at Bottom Right */
+.support-button {
+    position: absolute;
+    bottom: 30px;
+    right: 40px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: gray;
+    background: none;
+    border: 2px solid gray;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
-.nav-button:hover {  
-    background-color: red; /* Change background on hover */  
-    color: white; /* Change text color on hover */  
-}  
-
-/* Main Content */  
-.content {  
-    position: relative;   
-    height: 100vh; /* Full height */  
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(255, 0, 0, 0.5)); /* Colorful background */  
-    padding: 0 20px;   
-}  
-
-/* Tagline */  
-.tagline {  
-    font-size: 48px; /* Increased font size */  
-    color: rgba(255, 255, 255, 0.9);  
-    position: absolute;   
-    top: 50%;   
-    left: 50%;   
-    transform: translate(-50%, -50%);   
-    text-align: center;   
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Shadow for depth */  
-}  
-
-/* Support Button */  
-.support-btn {  
-    position: absolute;   
-    bottom: 20px;   
-    right: 20px;   
-    padding: 10px 20px;  
-    border: none;  
-    border-radius: 8px;  
-    background-color: white; /* Button background */  
-    color: black;   
-    cursor: pointer;  
-    transition: background-color 0.3s, color 0.3s;   
-}  
-
-.support-btn:hover {  
-    background-color: black; /* Button hover background */  
-    color: white;   
+.support-button:hover {
+    border-color: red;
+    color: red;
 }
