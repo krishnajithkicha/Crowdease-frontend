@@ -1,40 +1,37 @@
-import React from "react";
-import "./StaffPortal.css";
-{/*import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";*/}
+import React from "react";  
+import "./StaffPortal.css";  
 
-const StaffPortal = () => {
-  return (
-    <div className="staff-container">
-      {/* Navbar */}
-      <nav className="navbar">
-        <button className="staff-btn">STAFF PORTAL</button>
-        <ul>
-          <li><a href="#">HOME</a></li>
-          <li><a href="#">TASK</a></li>
-          <li><a href="#">QR</a></li>
-          <li><a href="#">REAL TIME ALERT</a></li>
-          <li><a href="#">LOG OUT</a></li>
-        </ul>
-      </nav>
+const StaffPortal = () => {  
+  return (  
+    <div className="staff-container">  
+      {/* Navbar */}  
+      <nav className="navbar">  
+        <div className="logo">  
+          {/*<img src="logo.png" alt="CrowdEase Logo" />*/}  
+        </div>  
+        <button className="staff-btn">STAFF PORTAL</button>  
+        <ul>  
+          <li><button className="nav-button">HOME</button></li>  
+          <li><button className="nav-button">TASK</button></li>  
+          <li><button className="nav-button">QR</button></li>  
+          <li><button className="nav-button">REAL TIME ALERT</button></li>  
+          <li><button className="nav-button">LOG OUT</button></li>  
+        </ul>  
+      </nav>  
 
-      {/* Hero Section */}
-      <header className="hero">
-        <div className="logo">
-          {/*<img src="logo.png" alt="CrowdEase Logo" />*/}
-        </div>
-        <h1 className="brand-name">CROWDEASE</h1>
-        <p className="tagline">"Book Smarter, Enjoy Better"</p>
-      </header>
+      {/* Hero Section */}  
+      <header className="hero">  
+        <p className="tagline">"Book Smarter, Enjoy Better"</p>  
+      </header>  
 
-      {/* Main Content */}
-      <main className="content">
-        <h2>"EFFORTLESS TICKETING, SEAMLESS EVENTS."</h2>
-        <div className="pattern"></div>
-        <button className="support-btn">SUPPORT ➜</button>
-      </main>
-    </div>
-  );
-};
+      {/* Main Content */}  
+      <main className="content">  
+        <h2 className="main-tagline">"EFFORTLESS TICKETING, SEAMLESS EVENTS."</h2>  
+        <div className="pattern"></div>  
+        <button className="support-btn">SUPPORT ➜</button>  
+      </main>  
+    </div>  
+  );  
+};  
 
 export default StaffPortal;
