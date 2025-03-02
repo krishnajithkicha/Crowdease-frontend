@@ -8,23 +8,22 @@ import AdminPortal from "./pages/AdminPortal";
 import AttendeePortal from "./pages/AttendeePortal";
 import EventOrganizerPortal from "./pages/EventOrganizerPortal";
 import StaffPortal from "./pages/StaffPortal";
+import EventCreation from "./pages/EventCreation"; 
 import PrivateRoute from "./PrivateRoute";
 
 const RedirectBasedOnRole = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
-
+    
     useEffect(() => {
         if (user) {
             if (user.role === "Admin") {
                 navigate("/admin");
             } else if (user.role === "Attendee") {
                 navigate("/attendee");
-            }
-            else if(user.role==="Event Organizer"){
-                navigate("/event organizer");
-            }
-            else if(user.role==="Staff"){
+            } else if (user.role === "Event Organizer") {
+                navigate("/event-organizer");
+            } else if (user.role === "Staff") {
                 navigate("/staff");
             }
         }
@@ -58,7 +57,7 @@ const App = () => {
                         }  
                     />
                     <Route  
-                        path="/event organizer"  
+                        path="/event-organizer"  
                         element={  
                             <PrivateRoute allowedRoles={["Event Organizer"]}>  
                                 <EventOrganizerPortal />  
@@ -72,7 +71,16 @@ const App = () => {
                                 <StaffPortal />  
                             </PrivateRoute>  
                         }  
-                    />       
+                    />
+                    {/* Adding a new route for Event Creation */}
+                    <Route  
+                        path="/event-creation"  
+                        element={  
+                            <PrivateRoute allowedRoles={["Event Organizer"]}>  
+                                <EventCreation />  
+                            </PrivateRoute>  
+                        }  
+                    />
                     <Route path="/" element={<HomePage />} />
                 </Routes>
             </AuthProvider>

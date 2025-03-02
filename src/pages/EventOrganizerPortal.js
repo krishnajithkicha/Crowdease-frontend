@@ -1,7 +1,10 @@
 import React from "react";
 import "./EventOrganizerPortal.css";
+import { Link, useNavigate } from "react-router-dom";
 
 const EventOrganizerPortal = () => {
+  const navigate = useNavigate();
+
   const handleLogout = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/logout", {
@@ -10,12 +13,12 @@ const EventOrganizerPortal = () => {
       });
 
       if (response.ok) {
-        localStorage.removeItem("token");
+        localStorage.removeItem("token"); // 🚀 Ensure token is removed
+        localStorage.removeItem("user"); // 🚀 Remove stored user data
         sessionStorage.clear();
-        alert("Logged out successfully!");
-        window.location.href = "/login";
+        navigate("/login"); // Redirect to login page
       } else {
-        alert("Failed to log out. Please try again.");
+        alert("Logout failed. Please try again.");
       }
     } catch (error) {
       console.error("Logout error:", error);
@@ -32,12 +35,26 @@ const EventOrganizerPortal = () => {
           {/*<p className="tagline">"Book Smarter, Enjoy Better"</p>*/}
         </div>
         <ul className="nav-links">
-          <li><button>EVENT CREATION</button></li>
-          <li><button>MANAGEMENT</button></li>
-          <li><button>REPORTS</button></li>
-          <li><button>TICKET CONFIGURATION</button></li>
-          <li><button>NOTIFICATION</button></li>
-          <li><button onClick={handleLogout}>LOG OUT</button></li>
+          <li>
+            <Link to="/event-creation">
+              <button>EVENT CREATION</button>
+            </Link>
+          </li>
+          <li>
+            <button>MANAGEMENT</button>
+          </li>
+          <li>
+            <button>REPORTS</button>
+          </li>
+          <li>
+            <button>TICKET CONFIGURATION</button>
+          </li>
+          <li>
+            <button>NOTIFICATION</button>
+          </li>
+          <li>
+            <button onClick={handleLogout}>LOG OUT</button>
+          </li>
         </ul>
       </nav>
 

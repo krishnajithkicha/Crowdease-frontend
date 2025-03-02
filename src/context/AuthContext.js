@@ -17,9 +17,10 @@ export const AuthProvider = ({ children }) => {
     
             const data = await response.json();
             if (response.ok) {
-                setUser({ email, role }); // Store user details
-                localStorage.setItem("user", JSON.stringify({ email, role })); // Persist user data
-                return data.user; // Return user for immediate use
+                const loggedInUser = { email, role };
+                setUser(loggedInUser); // Update user state
+                localStorage.setItem("user", JSON.stringify(loggedInUser)); // Store user data
+                return loggedInUser; // Ensure correct user is returned
             } else {
                 console.error(data.message);
                 return null;
@@ -29,6 +30,7 @@ export const AuthProvider = ({ children }) => {
             return null;
         }
     };
+    
     
     const logout = () => {
         setUser(null);
