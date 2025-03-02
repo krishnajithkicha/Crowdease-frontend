@@ -1,38 +1,36 @@
 import React from "react";
 import "./EventOrganizerPortal.css";
-import { Link, useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 const EventOrganizerPortal = () => {
-  const navigate = useNavigate();
+
+  const { logout } = useAuth(); 
 
   const handleLogout = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/api/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        localStorage.removeItem("token"); // 🚀 Ensure token is removed
-        localStorage.removeItem("user"); // 🚀 Remove stored user data
-        sessionStorage.clear();
-        navigate("/login"); // Redirect to login page
-      } else {
-        alert("Logout failed. Please try again.");
+      try {
+          const response = await fetch("http://localhost:5000/api/logout", {
+              method: "POST",
+              credentials: "include",
+          });
+  
+          if (!response.ok) {
+              throw new Error("Logout failed. Please try again.");
+          }
+  
+          logout(); 
+      } catch (error) {
+          console.error("Logout error:", error);
+          alert(error.message || "An error occurred during logout.");
       }
-    } catch (error) {
-      console.error("Logout error:", error);
-      alert("An error occurred during logout.");
-    }
   };
+  
+  
 
   return (
     <div className="portal-container">
-      {/* Navbar */}
       <nav className="navbar">
         <div className="logo">
           <span className="logo-text"></span>
-          {/*<p className="tagline">"Book Smarter, Enjoy Better"</p>*/}
         </div>
         <ul className="nav-links">
           <li>
@@ -58,7 +56,6 @@ const EventOrganizerPortal = () => {
         </ul>
       </nav>
 
-      {/* Main Content */}
       <main className="main-content">
         <h1 className="hero-text">"THE SMART WAY TO MANAGE EVENTS."</h1>
         <button className="support-button">SUPPORT</button>

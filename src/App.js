@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -14,20 +14,25 @@ import PrivateRoute from "./PrivateRoute";
 const RedirectBasedOnRole = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
-    
+    const location = useLocation();
+
     useEffect(() => {
-        if (user) {
-            if (user.role === "Admin") {
-                navigate("/admin");
-            } else if (user.role === "Attendee") {
-                navigate("/attendee");
-            } else if (user.role === "Event Organizer") {
-                navigate("/event-organizer");
-            } else if (user.role === "Staff") {
-                navigate("/staff");
-            }
+        if (!user) return;
+
+        if (["/event-creation", "/event-organizer", "/login"].includes(location.pathname)) {
+            return;
         }
-    }, [user, navigate]);
+
+        if (user.role === "Admin" && location.pathname !== "/admin") {
+            navigate("/admin");
+        } else if (user.role === "Attendee" && location.pathname !== "/attendee") {
+            navigate("/attendee");
+        } else if (user.role === "Event Organizer" && location.pathname !== "/event-organizer") {
+            navigate("/event-organizer");
+        } else if (user.role === "Staff" && location.pathname !== "/staff") {
+            navigate("/staff");
+        }
+    }, [user, navigate, location]);
 
     return null;
 };
@@ -35,10 +40,13 @@ const RedirectBasedOnRole = () => {
 const App = () => {
     return (
         <Router>
+            
             <AuthProvider>
+                
                 <RedirectBasedOnRole />
                 <Routes>
-                    <Route path="/login" element={<LoginPage />} />
+                <Route path="/login" element={<LoginPage />} />
+
                     <Route path="/signup" element={<SignUpPage />} />
                     <Route  
                         path="/admin"  
@@ -72,7 +80,6 @@ const App = () => {
                             </PrivateRoute>  
                         }  
                     />
-                    {/* Adding a new route for Event Creation */}
                     <Route  
                         path="/event-creation"  
                         element={  

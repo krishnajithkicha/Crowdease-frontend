@@ -8,14 +8,14 @@ const LoginPage = () => {
     const [email, setEmail] = useState("");  
     const [password, setPassword] = useState("");  
     const [role, setRole] = useState("Attendee");  
-    const { login, user } = useAuth(); // Get user from useAuth  
+    const { login, user } = useAuth(); 
     const [errorMessage, setErrorMessage] = useState("");  
     const [isLoading, setIsLoading] = useState(false);  
     const navigate = useNavigate();  
 
     const handleLogin = async (event) => {
         event.preventDefault();
-        setErrorMessage(""); // Clear previous error messages
+        setErrorMessage(""); 
         setIsLoading(true);
     
         try {
@@ -54,9 +54,6 @@ const LoginPage = () => {
         }
     };
     
-    
-    
-
     // Redirect user after successful login
     useEffect(() => {  
         if (user) {  
@@ -65,6 +62,12 @@ const LoginPage = () => {
             } 
             else if (user.role === "Attendee") {
                 navigate("/attendee"); // Redirect Attendee
+            }
+            else if(user.role === "Event Organizer") {
+                navigate("/event-organizer"); // Redirect Event Organizer
+            }
+            else if(user.role === "Staff") {
+                navigate("/staff"); // Redirect Staff
             }
             else {  
                 navigate("/"); // Redirect other users to home  
