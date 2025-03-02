@@ -1,0 +1,57 @@
+.container {  
+    background-color: #000;  
+    color: white;  
+    padding: 20px;  
+  }  
+  
+  .navbar {  
+    display: flex;  
+    justify-content: space-between;  
+    align-items: center;  
+    background-color: #333;  
+    padding: 10px;  
+  }  
+  
+  .portal-title {  
+    font-size: 24px;  
+  }  
+  
+  .nav-button {  
+    background-color: transparent;  
+    color: white;  
+    border: none;  
+    cursor: pointer;  
+    padding: 10px;  
+  }  
+  
+  .content {  
+    background: linear-gradient(to bottom right, #4c0067, #1a0d28);  
+    padding: 20px;  
+    border-radius: 8px;  
+    margin-top: 20px;  
+  }  
+  
+  .event-form {  
+    display: flex;  
+    flex-direction: column;  
+  }  
+  
+  label {  
+    margin-bottom: 10px;  
+  }  
+  
+  input, textarea {  
+    padding: 8px;  
+    margin-top: 5px;  
+    border: 1px solid #ddd;  
+    border-radius: 4px;  
+  }  
+  
+  .support-btn {  
+    background-color: #4CAF50;  
+    color: white;  
+    border: none;  
+    padding: 10px 20px;  
+    cursor: pointer;  
+    margin-top: 20px;  
+  }  
