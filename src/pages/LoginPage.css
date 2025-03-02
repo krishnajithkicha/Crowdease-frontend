@@ -73,6 +73,7 @@
     background: #333;   
 }  
 
+
 .login-form p {  
     margin-top: 15px;  
     text-align: center;  
@@ -93,7 +94,7 @@
     text-align: center; /* Center the heading */  
 }
 .error-message {
-    color: black; /* Set error message text to black */
+    color: rgb(14, 0, 0); /* Set error message text to black */
     font-size: 14px;
     margin-top: 10px;
 }

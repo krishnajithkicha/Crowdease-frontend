@@ -15,7 +15,16 @@ body {
     justify-content: space-between;
     position: relative;
 }
-
+.evntbttn {  
+    background: red;  
+    color: white;  
+    font-weight: bold;  
+    padding: 12px 20px;  
+    border: none;  
+    border-radius: 20px;  
+    cursor: pointer;  
+    margin: 0 auto; /* Center the staff button */  
+}  
 /* Navbar */
 .navbar {
     display: flex;

@@ -16,26 +16,31 @@ export const AuthProvider = ({ children }) => {
             });
     
             const data = await response.json();
-            if (response.ok) {
-                const loggedInUser = { email, role };
-                setUser(loggedInUser); // Update user state
-                localStorage.setItem("user", JSON.stringify(loggedInUser)); // Store user data
-                return loggedInUser; // Ensure correct user is returned
-            } else {
-                console.error(data.message);
-                return null;
+    
+            if (!response.ok) {
+                throw new Error(data.message || "Invalid email or password"); // Throw an error instead of returning null
             }
+    
+            const loggedInUser = { email, role };
+            setUser(loggedInUser); // Update user state
+            localStorage.setItem("user", JSON.stringify(loggedInUser)); // Store user data
+            return loggedInUser;
         } catch (error) {
             console.error("Login error:", error);
-            return null;
+            throw error; // Ensure error is thrown to trigger the catch block in LoginPage.js
         }
     };
     
     
+    
     const logout = () => {
-        setUser(null);
-        navigate("/login"); // Redirect to login after logout
+        setUser(null); // Clear user state
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        sessionStorage.clear();
+        navigate("/login"); // Redirect to login page
     };
+    
 
     return (
         <AuthContext.Provider value={{ user, login, logout }}>
