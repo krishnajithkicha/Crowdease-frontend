@@ -17,7 +17,7 @@ const SignUpPage = () => {
     setSuccessMessage("");
 
     try {
-      const response = await axios.post("http://localhost:5000/api/register", { email, name, role, password });
+      const response = await axios.post("https://crowdease-backend.vercel.app/api/register", { email, name, role, password });
       setSuccessMessage(response.data.message); // Show success message
       window.location.href = "/login"; // Redirect to login page
     } catch (error) {
