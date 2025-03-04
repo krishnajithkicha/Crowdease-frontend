@@ -9,6 +9,7 @@ import AttendeePortal from "./pages/AttendeePortal";
 import EventOrganizerPortal from "./pages/EventOrganizerPortal";
 import StaffPortal from "./pages/StaffPortal";
 import EventCreation from "./pages/EventCreation"; 
+import ContactPage from "./pages/ContactPage";
 import PrivateRoute from "./PrivateRoute";
 
 const RedirectBasedOnRole = () => {
@@ -89,6 +90,7 @@ const App = () => {
                         }  
                     />
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/contact" element={<ContactPage />} />
                 </Routes>
             </AuthProvider>
         </Router>
