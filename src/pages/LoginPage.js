@@ -45,7 +45,7 @@ const LoginPage = () => {
             } else if (error.response?.status === 403) {
                 setErrorMessage("Access denied. You do not have the required permissions.");
             } else {
-                setErrorMessage(error.response?.data?.message || "An error occurred during login.");
+                setErrorMessage(error.response?.data?.message || "Invalid Login.");
             }
         }
         
