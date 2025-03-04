@@ -37,7 +37,7 @@ const EventCreation = () => {
     formData.append("bannerImage", eventDetails.bannerImage);
 
     try {
-      const response = await fetch("http://localhost:5000/api/events", {
+      const response = await fetch("https://crowdease-backend.vercel.app/api/events", {
         method: "POST",
         body: formData,
       });
