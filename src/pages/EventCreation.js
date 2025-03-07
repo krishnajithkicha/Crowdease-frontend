@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import "./EventCreation.css"; // Import your CSS file here.
+import { useNavigate } from "react-router-dom"; // Import navigation
+import "./EventCreation.css";
 
 const EventCreation = () => {
+  const navigate = useNavigate(); // Use the navigate hook
+
   const [eventDetails, setEventDetails] = useState({
     eventName: "",
     description: "",
@@ -37,15 +40,21 @@ const EventCreation = () => {
     formData.append("bannerImage", eventDetails.bannerImage);
 
     try {
-      const response = await fetch("https://crowdease-backend.vercel.app/api/events", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        "https://crowdease-backend.vercel.app/api/events",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       if (response.ok) {
         const result = await response.json();
         console.log("Event created successfully:", result);
         alert("Event created successfully!");
+        
+        // Navigate to Venue Management Page
+        navigate("/venue-management");
       } else {
         const errorData = await response.json();
         console.error("Error creating event:", errorData);
@@ -60,9 +69,6 @@ const EventCreation = () => {
   return (
     <div className="container">
       <nav className="navbar">
-        <div className="logo">
-          {/* <img src="logo.png" alt="CrowdEase Logo" /> */}
-        </div>
         <div className="portal-title">Event Organizer Portal</div>
         <ul>
           <li>
@@ -168,7 +174,6 @@ const EventCreation = () => {
           </label>
           <button type="submit">Submit Event Details</button>
         </form>
-        {/*<button className="support-btn">SUPPORT</button>*/}
       </main>
     </div>
   );
