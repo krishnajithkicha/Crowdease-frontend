@@ -10,6 +10,7 @@ import EventOrganizerPortal from "./pages/EventOrganizerPortal";
 import StaffPortal from "./pages/StaffPortal";
 import EventCreation from "./pages/EventCreation"; 
 import ContactPage from "./pages/ContactPage";
+import VenueManagement from "./pages/VenueManagement";
 import PrivateRoute from "./PrivateRoute";
 
 const RedirectBasedOnRole = () => {
@@ -23,6 +24,7 @@ const RedirectBasedOnRole = () => {
         if (["/event-creation", "/event-organizer", "/login"].includes(location.pathname)) {
             return;
         }
+        
 
         if (user.role === "Admin" && location.pathname !== "/admin") {
             navigate("/admin");
@@ -86,6 +88,14 @@ const App = () => {
                         element={  
                             <PrivateRoute allowedRoles={["Event Organizer"]}>  
                                 <EventCreation />  
+                            </PrivateRoute>  
+                        }  
+                    />
+                    <Route  
+                        path="/venue-management"  
+                        element={  
+                            <PrivateRoute allowedRoles={["Event Organizer"]}>  
+                                <VenueManagement />  
                             </PrivateRoute>  
                         }  
                     />
