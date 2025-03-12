@@ -21,7 +21,7 @@ const RedirectBasedOnRole = () => {
     useEffect(() => {
         if (!user) return;
 
-        if (["/event-creation", "/event-organizer", "/login"].includes(location.pathname)) {
+        if (["/venue-management","/event-creation", "/event-organizer", "/login"].includes(location.pathname)) {
             return;
         }
         
