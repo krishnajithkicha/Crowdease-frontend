@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./VenueManagement.css";
 import "./EventCreation.css";
+import { useNavigate } from "react-router-dom";
 const VenueManagement = () => {
+  const navigate = useNavigate();
   const [venueDetails, setVenueDetails] = useState({
     venueName: "",
     seatingCapacity: "",
