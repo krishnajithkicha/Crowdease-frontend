@@ -51,6 +51,7 @@ const EventCreation = () => {
       if (response.ok) {
         const result = await response.json();
         console.log("Event created successfully:", result);
+        
         alert("Event created successfully!");
         
         // Navigate to Venue Management Page

@@ -5,7 +5,7 @@ const VenueManagement = () => {
   const [venueDetails, setVenueDetails] = useState({
     venueName: "",
     seatingCapacity: "",
-    seatingPreference: "",
+    seatingType: "", // Updated to match backend field
   });
 
   const handleChange = (e) => {
@@ -61,14 +61,16 @@ const VenueManagement = () => {
           />
         </label>
         <label>
-          Seating Preference:
+          Seating Type:
           <select
-            name="seatingPreference"
-            value={venueDetails.seatingPreference}
+            name="seatingType"
+            value={venueDetails.seatingType}
             onChange={handleChange}
+            required
           >
-            <option value="Assigned Seating">Assigned Seating</option>
-            <option value="No Preference">No Preference</option>
+            <option value="">Select Seating Type</option>
+            <option value="seatSelection">Seat Selection</option>
+            <option value="noPreference">No Preference</option>
           </select>
         </label>
         <button type="submit">Save Venue Details</button>
