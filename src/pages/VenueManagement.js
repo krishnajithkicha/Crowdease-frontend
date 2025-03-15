@@ -44,6 +44,7 @@ const VenueManagement = () => {
 
       if (response.ok) {
         alert("Venue saved successfully!");
+        navigate("/ticket-pricing"); // Navigate to Ticket Pricing Page
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.message}`);
@@ -55,7 +56,7 @@ const VenueManagement = () => {
   };
 
   return (
-    <div className="venue-container">
+    <div className="container">
       <nav className="navbar">
         <div className="portal-title">Event Organizer Portal</div>
         <ul>
