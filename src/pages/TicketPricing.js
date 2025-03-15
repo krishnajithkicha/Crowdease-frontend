@@ -1,38 +1,46 @@
 import React, { useState } from "react";
-import "./VenueManagement.css"; // Reusing VenueManagement styles for consistency
-import "./EventCreation.css"; // Reusing EventCreation styles for consistency
+import { useNavigate } from "react-router-dom";
 import "./TicketPricing.css";
+import "./EventCreation.css";
 
-function TicketPricing() {
-  const [ticketType, setTicketType] = useState("");
-  const [ticketPrice, setTicketPrice] = useState("");
-  const [discount, setDiscount] = useState("");
-  const [paymentOption, setPaymentOption] = useState("");
-  const [promoImage, setPromoImage] = useState(null);
+const TicketPricing = () => {
+  const [ticketDetails, setTicketDetails] = useState({
+    ticketType: "",
+    price: "",
+    discount: "",
+    paymentOption: "",
+    promoImage: null,
+  });
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setTicketDetails({ ...ticketDetails, [name]: value });
+  };
+
+  const handleFileChange = (e) => {
+    setTicketDetails({ ...ticketDetails, promoImage: e.target.files[0] });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formData = new FormData();
-    formData.append("ticketType", ticketType);
-    formData.append("ticketPrice", ticketPrice);
-    formData.append("discount", discount);
-    formData.append("paymentOption", paymentOption);
-    if (promoImage) {
-      formData.append("promoImage", promoImage);
-    }
+    formData.append("ticketType", ticketDetails.ticketType);
+    formData.append("price", ticketDetails.price);
+    formData.append("discount", ticketDetails.discount);
+    formData.append("paymentOption", ticketDetails.paymentOption);
+    formData.append("promoImage", ticketDetails.promoImage);
 
     try {
-      const response = await fetch(
-        "https://crowdease-backend.vercel.app/api/ticket-pricing", // Updated API endpoint
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
+      const response = await fetch("https://crowdease-backend.vercel.app/api/ticket-pricing", {
+        method: "POST",
+        body: formData,
+      });
+      
       if (response.ok) {
         alert("Ticket pricing saved successfully!");
+        navigate("/next-page"); // Replace with the actual next page route
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.message}`);
@@ -48,24 +56,12 @@ function TicketPricing() {
       <nav className="navbar">
         <div className="portal-title">Event Organizer Portal</div>
         <ul>
-          <li>
-            <button className="nav-button">EVENT CREATION</button>
-          </li>
-          <li>
-            <button className="nav-button">MANAGEMENT</button>
-          </li>
-          <li>
-            <button className="nav-button">REPORTS</button>
-          </li>
-          <li>
-            <button className="nav-button">TICKET CONFIGURATION</button>
-          </li>
-          <li>
-            <button className="nav-button">NOTIFICATION</button>
-          </li>
-          <li>
-            <button className="nav-button">LOG OUT</button>
-          </li>
+          <li><button className="nav-button">EVENT CREATION</button></li>
+          <li><button className="nav-button">MANAGEMENT</button></li>
+          <li><button className="nav-button">REPORTS</button></li>
+          <li><button className="nav-button">TICKET CONFIGURATION</button></li>
+          <li><button className="nav-button">NOTIFICATION</button></li>
+          <li><button className="nav-button">LOG OUT</button></li>
         </ul>
       </nav>
 
@@ -73,64 +69,58 @@ function TicketPricing() {
         <h2 className="tagline">TICKET PRICING & SALES</h2>
         <form onSubmit={handleSubmit}>
           <label>
-            Ticket Type*
+            Set Ticket Type:
             <input
               type="text"
-              value={ticketType}
-              onChange={(e) => setTicketType(e.target.value)}
+              name="ticketType"
+              value={ticketDetails.ticketType}
+              onChange={handleChange}
               required
             />
           </label>
-
           <label>
-            Ticket Price
+            Ticket Price:
             <input
               type="number"
-              value={ticketPrice}
-              onChange={(e) => setTicketPrice(e.target.value)}
-            />
-          </label>
-
-          <label>
-            Discount
-            <input
-              type="number"
-              value={discount}
-              onChange={(e) => setDiscount(e.target.value)}
-            />
-          </label>
-
-          <label>
-            Payment Option*
-            <select
-              value={paymentOption}
-              onChange={(e) => setPaymentOption(e.target.value)}
+              name="price"
+              value={ticketDetails.price}
+              onChange={handleChange}
               required
-            >
-              <option value="" disabled>
-                Select Payment Option
-              </option>
-              <option value="Credit Card">Credit Card</option>
-              <option value="Debit Card">Debit Card</option>
-              <option value="UPI">UPI</option>
-              <option value="Net Banking">Net Banking</option>
-            </select>
+            />
           </label>
-
           <label>
-            Add Promo Image
+            Discount:
+            <input
+              type="text"
+              name="discount"
+              value={ticketDetails.discount}
+              onChange={handleChange}
+            />
+          </label>
+          <label>
+            Payment Option:
+            <input
+              type="text"
+              name="paymentOption"
+              value={ticketDetails.paymentOption}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <label>
+            Add Promo Image:
             <input
               type="file"
+              name="promoImage"
               accept="image/*"
-              onChange={(e) => setPromoImage(e.target.files[0])}
+              onChange={handleFileChange}
             />
           </label>
-
-          <button type="submit">Save Ticket Pricing</button>
+          <button type="submit">Save Ticket Details</button>
         </form>
       </main>
     </div>
   );
-}
+};
 
 export default TicketPricing;
