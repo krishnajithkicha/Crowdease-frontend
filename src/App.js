@@ -11,6 +11,7 @@ import StaffPortal from "./pages/StaffPortal";
 import EventCreation from "./pages/EventCreation"; 
 import ContactPage from "./pages/ContactPage";
 import VenueManagement from "./pages/VenueManagement";
+import TicketPricing from "./pages/TicketPricing";
 import PrivateRoute from "./PrivateRoute";
 
 const RedirectBasedOnRole = () => {
@@ -21,7 +22,7 @@ const RedirectBasedOnRole = () => {
     useEffect(() => {
         if (!user) return;
 
-        if (["/venue-management","/event-creation", "/event-organizer", "/login"].includes(location.pathname)) {
+        if (["/ticket-pricing","/venue-management","/event-creation", "/event-organizer", "/login"].includes(location.pathname)) {
             return;
         }
         
@@ -99,6 +100,14 @@ const App = () => {
                             </PrivateRoute>  
                         }  
                     />
+                     <Route  
+                        path="/ticket-pricing"
+                        element={  
+                            <PrivateRoute allowedRoles={["Event Organizer"]}>  
+                                <TicketPricing />  
+                            </PrivateRoute>  
+                        }
+                    />  
                     <Route path="/" element={<HomePage />} />
                     <Route path="/contact" element={<ContactPage />} />
                 </Routes>
