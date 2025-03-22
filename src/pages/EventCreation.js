@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import navigation
+import { useNavigate } from "react-router-dom";
 import "./EventCreation.css";
 
 const EventCreation = () => {
-  const navigate = useNavigate(); // Use the navigate hook
+  const navigate = useNavigate();
+  const API_URL = process.env.REACT_APP_API_URL || "https://crowdease-backend.vercel.app";
 
   const [eventDetails, setEventDetails] = useState({
     eventName: "",
@@ -14,6 +15,15 @@ const EventCreation = () => {
     duration: "",
     promotionalImage: null,
     bannerImage: null,
+    venueName: "",
+    maxCapacity: "",
+    seatingType: "noPreference",
+    ticketType: "",
+    ticketPrice: "",
+    discount: "",
+    paymentOption: "",
+    venueImage: null,
+    seatingLayout: null,
   });
 
   const handleChange = (e) => {
@@ -30,40 +40,35 @@ const EventCreation = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("eventName", eventDetails.eventName);
-    formData.append("description", eventDetails.description);
-    formData.append("category", eventDetails.category);
-    formData.append("eventDate", eventDetails.eventDate);
-    formData.append("time", eventDetails.time);
-    formData.append("duration", eventDetails.duration);
-    formData.append("promotionalImage", eventDetails.promotionalImage);
-    formData.append("bannerImage", eventDetails.bannerImage);
+    for (const key in eventDetails) {
+      formData.append(key, eventDetails[key]);
+    }
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Authentication error: No token found.");
+      return;
+    }
 
     try {
-      const response = await fetch(
-        "https://crowdease-backend.vercel.app/api/events",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch(`${API_URL}/api/events`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
 
       if (response.ok) {
         const result = await response.json();
-        console.log("Event created successfully:", result);
-        
         alert("Event created successfully!");
-        
-        // Navigate to Venue Management Page
-        navigate("/venue-management");
+        navigate("/event-listing");
       } else {
         const errorData = await response.json();
-        console.error("Error creating event:", errorData);
         alert("Error creating event: " + errorData.message);
       }
     } catch (error) {
-      console.error("Network error:", error);
-      alert("Network error occurred. Please try again.");
+      alert("Network error. Please try again.");
     }
   };
 
@@ -71,109 +76,68 @@ const EventCreation = () => {
     <div className="container">
       <nav className="navbar">
         <div className="portal-title">Event Organizer Portal</div>
-        <ul>
-          <li>
-            <button className="nav-button">EVENT CREATION</button>
-          </li>
-          <li>
-            <button className="nav-button">MANAGEMENT</button>
-          </li>
-          <li>
-            <button className="nav-button">REPORTS</button>
-          </li>
-          <li>
-            <button className="nav-button">TICKET CONFIGURATION</button>
-          </li>
-          <li>
-            <button className="nav-button">NOTIFICATION</button>
-          </li>
-          <li>
-            <button className="nav-button">LOG OUT</button>
-          </li>
-        </ul>
       </nav>
-
       <main className="content">
-        <h2 className="tagline">EVENT DETAILS</h2>
+        <h2 className="tagline">Create Your Event</h2>
         <form onSubmit={handleSubmit} className="event-form">
-          <label>
-            Event Name:
-            <input
-              type="text"
-              name="eventName"
-              value={eventDetails.eventName}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Description:
-            <textarea
-              name="description"
-              value={eventDetails.description}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Category:
-            <input
-              type="text"
-              name="category"
-              value={eventDetails.category}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Event Date:
-            <input
-              type="date"
-              name="eventDate"
-              value={eventDetails.eventDate}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Time:
-            <input
-              type="time"
-              name="time"
-              value={eventDetails.time}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Duration:
-            <input
-              type="text"
-              name="duration"
-              value={eventDetails.duration}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Promotional Image:
-            <input
-              type="file"
-              name="promotionalImage"
-              onChange={handleFileChange}
-              accept="image/*"
-            />
-          </label>
-          <label>
-            Upload Event Banner:
-            <input
-              type="file"
-              name="bannerImage"
-              onChange={handleFileChange}
-              accept="image/*"
-            />
-          </label>
-          <button type="submit">Submit Event Details</button>
+
+          {/* Event Details Section */}
+          <h3>Event Details</h3>
+          <label>Event Name</label>
+          <input type="text" name="eventName" value={eventDetails.eventName} onChange={handleChange} required placeholder="Enter event name" />
+
+          <label>Description</label>
+          <textarea name="description" value={eventDetails.description} onChange={handleChange} required placeholder="Enter event description" />
+
+          <label>Category</label>
+          <input type="text" name="category" value={eventDetails.category} onChange={handleChange} required placeholder="Enter category" />
+
+          <label>Event Date</label>
+          <input type="date" name="eventDate" value={eventDetails.eventDate} onChange={handleChange} required />
+
+          <label>Time</label>
+          <input type="time" name="time" value={eventDetails.time} onChange={handleChange} required />
+
+          <label>Duration</label>
+          <input type="text" name="duration" value={eventDetails.duration} onChange={handleChange} required placeholder="Enter event duration" />
+
+          {/* Venue Details Section */}
+          <h3>Venue Details</h3>
+          <label>Venue Name</label>
+          <input type="text" name="venueName" value={eventDetails.venueName} onChange={handleChange} required placeholder="Enter venue name" />
+
+          <label>Max Capacity</label>
+          <input type="number" name="maxCapacity" value={eventDetails.maxCapacity} onChange={handleChange} required placeholder="Enter max capacity" />
+
+          {/* Ticket Details Section */}
+          <h3>Ticket Details</h3>
+          <label>Ticket Type</label>
+          <input type="text" name="ticketType" value={eventDetails.ticketType} onChange={handleChange} required placeholder="Enter ticket type" />
+
+          <label>Ticket Price</label>
+          <input type="number" name="ticketPrice" value={eventDetails.ticketPrice} onChange={handleChange} required placeholder="Enter ticket price" />
+
+          <label>Discount (Optional)</label>
+          <input type="number" name="discount" value={eventDetails.discount} onChange={handleChange} placeholder="Enter discount" />
+
+          <label>Payment Option</label>
+          <input type="text" name="paymentOption" value={eventDetails.paymentOption} onChange={handleChange} required placeholder="Enter payment option" />
+
+          {/* Upload Images Section */}
+          <h3>Upload Images</h3>
+          <label>Promotional Image</label>
+          <input type="file" name="promotionalImage" onChange={handleFileChange} accept="image/*" />
+
+          <label>Banner Image</label>
+          <input type="file" name="bannerImage" onChange={handleFileChange} accept="image/*" />
+
+          <label>Venue Image</label>
+          <input type="file" name="venueImage" onChange={handleFileChange} accept="image/*" required />
+
+          <label>Seating Layout</label>
+          <input type="file" name="seatingLayout" onChange={handleFileChange} accept="image/*" required />
+
+          <button type="submit">Submit Event</button>
         </form>
       </main>
     </div>

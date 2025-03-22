@@ -11,7 +11,7 @@ const TicketPricing = () => {
     paymentOption: "",
     promoImage: null,
   });
-
+  const API_URL = process.env.REACT_APP_API_URL || "https://crowdease-backend.vercel.app";
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -33,7 +33,7 @@ const TicketPricing = () => {
     formData.append("promoImage", ticketDetails.promoImage);
 
     try {
-      const response = await fetch("https://crowdease-backend.vercel.app/api/ticket-pricing", {
+      const response = await fetch(`${API_URL}/api/ticket-pricing`, {
         method: "POST",
         body: formData,
       });
