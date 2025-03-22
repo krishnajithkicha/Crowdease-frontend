@@ -10,14 +10,14 @@ const SignUpPage = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-
+  const API_URL = process.env.REACT_APP_API_URL || "https://crowdease-backend.vercel.app";
   const handleSignUp = async (event) => {
     event.preventDefault();
     setErrorMessage("");
     setSuccessMessage("");
 
     try {
-      const response = await axios.post("https://crowdease-backend.vercel.app/api/register", { email, name, role, password });
+      const response = await axios.post(`${API_URL}/api/register`, { email, name, role, password });
       setSuccessMessage(response.data.message); // Show success message
       window.location.href = "/login"; // Redirect to login page
     } catch (error) {

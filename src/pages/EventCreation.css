@@ -124,3 +124,11 @@ button[type="submit"]:hover {
   color: white;
   border-color: white;
 }
+.image-preview {
+  width: 50px;  /* Smaller preview width */
+  height: 50px; /* Smaller preview height */
+  object-fit: cover;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}

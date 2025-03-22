@@ -6,10 +6,10 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
-
+    const API_URL = process.env.REACT_APP_API_URL || "https://crowdease-backend.vercel.app";
     const login = async (email, password, role) => {
         try {
-            const response = await fetch("https://crowdease-backend.vercel.app/api/login", {
+            const response = await fetch(`${API_URL}/api/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password, role }),
@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
     
             const loggedInUser = { email, role };
             setUser(loggedInUser); // Update user state
+            localStorage.setItem("token", data.token); 
             localStorage.setItem("user", JSON.stringify(loggedInUser)); // Store user data
             return loggedInUser;
         } catch (error) {

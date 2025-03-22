@@ -3,12 +3,12 @@ import "./EventOrganizerPortal.css";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 const EventOrganizerPortal = () => {
-
+  const API_URL = process.env.REACT_APP_API_URL || "https://crowdease-backend.vercel.app";
   const { logout } = useAuth(); 
 
   const handleLogout = async () => {
       try {
-          const response = await fetch("https://crowdease-backend.vercel.app/api/logout", {
+          const response = await fetch(`${API_URL}/api/logout` , {
               method: "POST",
               credentials: "include",
           });

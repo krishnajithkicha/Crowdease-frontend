@@ -3,6 +3,7 @@ import "./VenueManagement.css";
 import "./EventCreation.css";
 import { useNavigate } from "react-router-dom";
 const VenueManagement = () => {
+  const API_URL = process.env.REACT_APP_API_URL || "https://crowdease-backend.vercel.app";
   const navigate = useNavigate();
   const [venueDetails, setVenueDetails] = useState({
     venueName: "",
@@ -37,7 +38,7 @@ const VenueManagement = () => {
 
     try {
       const response = await fetch(
-        "https://crowdease-backend.vercel.app/api/venues",
+        `${API_URL}/api/venues`,
         {
           method: "POST",
           body: formData, // Send formData
