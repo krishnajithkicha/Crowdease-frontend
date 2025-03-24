@@ -11,7 +11,7 @@ const TicketPricing = () => {
     paymentOption: "",
     promoImage: null,
   });
-  const API_URL = process.env.REACT_APP_API_URL || "https://crowdease-backend.vercel.app";
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
   const navigate = useNavigate();
 
   const handleChange = (e) => {

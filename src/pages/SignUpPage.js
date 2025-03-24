@@ -10,7 +10,7 @@ const SignUpPage = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const API_URL = process.env.REACT_APP_API_URL || "https://crowdease-backend.vercel.app";
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
   const handleSignUp = async (event) => {
     event.preventDefault();
     setErrorMessage("");

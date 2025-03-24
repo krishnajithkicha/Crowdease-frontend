@@ -4,7 +4,7 @@ import "./EventCreation.css";
 
 const EventListing = () => {
   const navigate = useNavigate();
-  const API_URL = process.env.REACT_APP_API_URL || "https://crowdease-backend.vercel.app";
+  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   const [events, setEvents] = useState([]);
 
