@@ -2,28 +2,37 @@ import React from "react";
 import "./EventOrganizerPortal.css";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 const EventOrganizerPortal = () => {
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
   const { logout } = useAuth(); 
+  const navigate = useNavigate(); 
 
-  const handleLogout = async () => {
-      try {
-          const response = await fetch(`${API_URL}/api/logout` , {
-              method: "POST",
-              credentials: "include",
-          });
-  
-          if (!response.ok) {
-              throw new Error("Logout failed. Please try again.");
-          }
-  
-          logout(); 
-      } catch (error) {
-          console.error("Logout error:", error);
-          alert(error.message || "An error occurred during logout.");
-      }
+  {/*const handleLogout = async () => {
+    try {
+        const response = await fetch(`${API_URL}/api/logout`, {
+            method: "POST",
+            credentials: "include",
+        });
+
+        const data = await response.json(); 
+        console.log("Logout Response:", data);
+
+        if (!response.ok) {
+            throw new Error(data.message || "Logout failed. Please try again.");
+        }
+
+        logout(); 
+    } catch (error) {
+        console.error("Logout error:", error);
+        alert(error.message || "An error occurred during logout.");
+    }
+};*/}
+  const handleLogout = () => {
+    logout();
+    navigate("/"); // ✅ Using navigate to redirect
   };
-  
+
   
 
   return (
@@ -39,14 +48,16 @@ const EventOrganizerPortal = () => {
             </Link>
           </li>
           <li>
+            <Link to="/management">
             <button>MANAGEMENT</button>
+            </Link>
           </li>
           <li>
             <button>REPORTS</button>
           </li>
-          <li>
+           {/*<li>
             <button>TICKET CONFIGURATION</button>
-          </li>
+          </li>*/}
           <li>
             <button>NOTIFICATION</button>
           </li>
