@@ -19,7 +19,7 @@ const EventListing = () => {
       }
   
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/events`, {
+        const response = await fetch(`${API_URL}/api/events`, {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${token}`,

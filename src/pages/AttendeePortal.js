@@ -2,15 +2,19 @@ import React from "react";
 import "./AttendeePortal.css";
 import logo from "../assets/logo.png";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom"; // ✅ Keep this only if used
+import { useNavigate } from "react-router-dom"; 
 
 const AttendeePortal = () => {
   const { logout } = useAuth();
-  const navigate = useNavigate(); // ✅ Now it is used in handleLogout
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    navigate("/"); // ✅ Using navigate to redirect
+    navigate("/");
+  };
+
+  const handleBookTickets = () => {
+    navigate("/event-view"); // ✅ Navigate to the event-view page
   };
 
   return (
@@ -33,7 +37,9 @@ const AttendeePortal = () => {
       </header>
       <main className="main-content">
         <h1 className="headline">Ready to make some noise?</h1>
-        <button className="cta-button">BOOK YOUR TICKETS NOW</button>
+        <button className="cta-button" onClick={handleBookTickets}>
+          BOOK YOUR TICKETS NOW
+        </button>
       </main>
     </div>
   );
