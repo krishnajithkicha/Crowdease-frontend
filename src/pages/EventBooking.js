@@ -3,26 +3,36 @@ import { useParams } from "react-router-dom";
 
 const EventBooking = () => {
   const { eventId } = useParams(); // Get event ID from URL
+  console.log("EventBooking Page Loaded with Event ID:", eventId);
   const [event, setEvent] = useState(null);
   const [error, setError] = useState("");
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   useEffect(() => {
+    console.log("Fetching from:", `${API_URL}/api/events/${eventId}`);
+  
     const fetchEventDetails = async () => {
       try {
         const response = await fetch(`${API_URL}/api/events/${eventId}`);
+  
+        console.log("Response status:", response.status);
+  
         if (!response.ok) {
-          throw new Error("Failed to fetch event details");
+          throw new Error(`Failed to fetch event details. Status: ${response.status}`);
         }
+  
         const data = await response.json();
+        console.log("Fetched event data:", data);
         setEvent(data);
       } catch (err) {
+        console.error("Error fetching event details:", err.message);
         setError(err.message);
       }
     };
-
+  
     fetchEventDetails();
   }, [eventId]);
+  
 
   if (error) return <p style={{ color: "red" }}>{error}</p>;
   if (!event) return <p>Loading event details...</p>;

@@ -41,10 +41,12 @@ const EventView = () => {
           <div key={event._id} className="event-card">
             <h2>{event.eventName}</h2>
             <p>{new Date(event.eventDate).toDateString()} | {event.venueId?.venueName || "N/A"}</p>
-            <button onClick={() => 
-              navigate(`/event-book/${event._id}`)}>
-              View & Book
-            </button>
+            <button onClick={() => {
+              console.log("Navigating to:", `/event-book/${event._id}`); 
+              navigate(`/event-book/${event._id}`);
+            }}>
+    View & Book
+</button>
           </div>
         ))
       ) : (
