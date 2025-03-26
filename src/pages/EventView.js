@@ -1,40 +1,35 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import "./EventView.css";
 
 const EventView = () => {
   const [events, setEvents] = useState([]);
   const [error, setError] = useState("");
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+  const navigate = useNavigate(); // Initialize navigation
 
   const fetchEvents = async () => {
     try {
       const response = await fetch(`${API_URL}/api/all-events`, {
-        method: "GET", // Explicitly set the GET method
-        headers: {
-          "Content-Type": "application/json",
-        },
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
       });
-
-      console.log("Response status:", response.status);
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("Error fetching events:", errorData);
         setError(errorData.message || "Failed to fetch events");
         return;
       }
 
       const data = await response.json();
-      console.log("Fetched events:", data);
       setEvents(data);
     } catch (error) {
-      console.error("Network error:", error);
       setError("Network error: Unable to fetch events.");
     }
   };
 
   useEffect(() => {
-    fetchEvents(); // Call fetchEvents inside useEffect
+    fetchEvents();
   }, []);
 
   return (
@@ -45,11 +40,10 @@ const EventView = () => {
         events.map((event) => (
           <div key={event._id} className="event-card">
             <h2>{event.eventName}</h2>
-            <p>
-              {new Date(event.eventDate).toDateString()} | {event.venueId?.venueName || "N/A"}
-            </p>
-            <button onClick={() => console.log(`Booking event: ${event._id}`)}>
-              Book Now
+            <p>{new Date(event.eventDate).toDateString()} | {event.venueId?.venueName || "N/A"}</p>
+            <button onClick={() => 
+              navigate(`/event-book/${event._id}`)}>
+              View & Book
             </button>
           </div>
         ))
