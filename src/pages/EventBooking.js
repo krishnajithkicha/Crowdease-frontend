@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import "./EventBooking.css";
 
 const EventBooking = () => {
   const { eventId } = useParams(); // Get event ID from URL
