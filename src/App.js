@@ -26,9 +26,26 @@ const RedirectBasedOnRole = () => {
     useEffect(() => {
         if (!user) return;
 
-        if (["/event-book/:eventId","/attendee","/event-view","/management","/event-listing","/ticket-pricing","/venue-management","/event-creation", "/event-organizer", "/login"].includes(location.pathname)) {
-            return;
-        }
+        const allowedPaths = [
+            /^\/event-book\/[^/]+$/,
+            "/attendee",
+            "/event-view",
+            "/management",
+            "/event-listing",
+            "/ticket-pricing",
+            "/venue-management",
+            "/event-creation",
+            "/event-organizer",
+            "/login",
+          ];
+          
+          const isAllowedPath = allowedPaths.some((path) => {
+            if (typeof path === "string") return path === location.pathname;
+            return path.test(location.pathname); // handle regex for dynamic routes
+          });
+          
+          if (isAllowedPath) return;
+          
         
 
         if (user.role === "Admin" && location.pathname !== "/admin") {
