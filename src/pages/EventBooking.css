@@ -74,22 +74,43 @@
   .seat {
     width: 40px;
     height: 40px;
-    background-color: #7cff7c; /* green for available */
     border: 1px solid #ccc;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin: 4px;
+    text-align: center;
+    line-height: 40px;
     cursor: pointer;
+    border-radius: 5px;
     font-weight: bold;
   }
   
+  .seat-row {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  .seat-section {
+    margin-bottom: 30px;
+  }
+  
+  .seat.gold {
+    background-color: gold;
+  }
+  
+  .seat.vip {
+    background-color: palevioletred;
+  }
+  
+  .seat.normal {
+    background-color: lightgreen;
+  }
+  
   .seat.occupied {
-    background-color: #ff4d4d; /* red for occupied */
+    background-color:red;
     cursor: not-allowed;
   }
   
   .seat.selected {
-    background-color: #4da6ff; /* blue for selected */
+    border: 2px solid black;
+    outline: 2px solid blue;
   }
   
