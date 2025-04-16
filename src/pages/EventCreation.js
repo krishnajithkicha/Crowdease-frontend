@@ -23,10 +23,14 @@ const EventCreation = () => {
     discount: "",
     paymentOption: "",
     venueImage: null,
-    seatingLayout: [],
   });
 
-  const [seatInput, setSeatInput] = useState({ id: "", row: "", column: "" });
+  const [seatSections, setSeatSections] = useState([]);
+  const [sectionInput, setSectionInput] = useState({
+    sectionName: "",
+    rows: "",
+    seatsPerRow: "",
+  });
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
@@ -39,23 +43,20 @@ const EventCreation = () => {
     setEventDetails({ ...eventDetails, [name]: files[0] });
   };
 
-  const handleAddSeat = () => {
-    if (seatInput.id && seatInput.row && seatInput.column) {
-      setEventDetails((prevDetails) => ({
-        ...prevDetails,
-        seatingLayout: [
-          ...prevDetails.seatingLayout,
-          {
-            id: seatInput.id,
-            row: parseInt(seatInput.row, 10),
-            column: parseInt(seatInput.column, 10),
-            occupied: false,
-          },
-        ],
-      }));
-      setSeatInput({ id: "", row: "", column: "" });
+  const handleAddSection = () => {
+    const { sectionName, rows, seatsPerRow } = sectionInput;
+    if (sectionName && rows && seatsPerRow) {
+      setSeatSections((prev) => [
+        ...prev,
+        {
+          sectionName,
+          rows: parseInt(rows, 10),
+          seatsPerRow: parseInt(seatsPerRow, 10),
+        },
+      ]);
+      setSectionInput({ sectionName: "", rows: "", seatsPerRow: "" });
     } else {
-      alert("Please provide valid seat details.");
+      alert("Please fill all section fields.");
     }
   };
 
@@ -65,12 +66,10 @@ const EventCreation = () => {
 
     const formData = new FormData();
     for (const key in eventDetails) {
-      if (key === "seatingLayout") {
-        formData.append(key, JSON.stringify(eventDetails[key]));
-      } else {
-        formData.append(key, eventDetails[key]);
-      }
+      formData.append(key, eventDetails[key]);
     }
+
+    formData.append("seatSections", JSON.stringify(seatSections));
 
     const token = localStorage.getItem("token");
     if (!token) {
@@ -110,6 +109,7 @@ const EventCreation = () => {
         {error && <p className="error">{error}</p>}
         <form onSubmit={handleSubmit} className="event-form">
           <h3>Event Details</h3>
+
           <label>Event Name</label>
           <input
             type="text"
@@ -168,6 +168,7 @@ const EventCreation = () => {
           />
 
           <h3>Venue Details</h3>
+
           <label>Venue Name</label>
           <input
             type="text"
@@ -189,6 +190,7 @@ const EventCreation = () => {
           />
 
           <h3>Ticket Details</h3>
+
           <label>Ticket Type</label>
           <input
             type="text"
@@ -229,6 +231,7 @@ const EventCreation = () => {
           />
 
           <h3>Upload Images</h3>
+
           <label>Promotional Image</label>
           <input
             type="file"
@@ -256,37 +259,55 @@ const EventCreation = () => {
             required
           />
 
-          <h3>Seating Layout</h3>
-          <label>Seat ID</label>
+          <h3>Seating Sections</h3>
+
+          <label>Section Name</label>
           <input
             type="text"
-            name="seatId"
-            value={seatInput.id}
-            onChange={(e) => setSeatInput({ ...seatInput, id: e.target.value })}
-            placeholder="Enter seat ID"
+            name="sectionName"
+            value={sectionInput.sectionName}
+            onChange={(e) =>
+              setSectionInput({ ...sectionInput, sectionName: e.target.value })
+            }
+            placeholder="e.g., Gold, VIP"
           />
 
-          <label>Row</label>
+          <label>Rows</label>
           <input
             type="number"
-            name="row"
-            value={seatInput.row}
-            onChange={(e) => setSeatInput({ ...seatInput, row: e.target.value })}
-            placeholder="Enter row number"
+            name="rows"
+            value={sectionInput.rows}
+            onChange={(e) =>
+              setSectionInput({ ...sectionInput, rows: e.target.value })
+            }
+            placeholder="Enter number of rows"
           />
 
-          <label>Column</label>
+          <label>Seats Per Row</label>
           <input
             type="number"
-            name="column"
-            value={seatInput.column}
-            onChange={(e) => setSeatInput({ ...seatInput, column: e.target.value })}
-            placeholder="Enter column number"
+            name="seatsPerRow"
+            value={sectionInput.seatsPerRow}
+            onChange={(e) =>
+              setSectionInput({ ...sectionInput, seatsPerRow: e.target.value })
+            }
+            placeholder="Enter seats per row"
           />
 
-          <button type="button" onClick={handleAddSeat}>
-            Add Seat
+          <button type="button" onClick={handleAddSection}>
+            Add Section
           </button>
+
+          {seatSections.length > 0 && (
+            <ul>
+              {seatSections.map((section, index) => (
+                <li key={index}>
+                  {section.sectionName} - {section.rows} rows ×{" "}
+                  {section.seatsPerRow} seats
+                </li>
+              ))}
+            </ul>
+          )}
 
           <button type="submit">Submit Event</button>
         </form>

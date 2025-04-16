@@ -36,10 +36,13 @@ const EventBooking = () => {
 
   const handleBooking = async () => {
     try {
+      const token = localStorage.getItem("token");
+
       const response = await fetch(`${API_URL}/api/bookings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           eventId,
@@ -47,15 +50,15 @@ const EventBooking = () => {
           attendeeId: currentUser?._id,
         }),
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Booking failed");
       }
-  
+
       alert("Booking confirmed!");
       setSelectedSeats([]);
-  
+
       // Refetch event to show booked seats
       const updatedEventRes = await fetch(`${API_URL}/api/events/${eventId}`);
       const updatedEvent = await updatedEventRes.json();
@@ -64,8 +67,6 @@ const EventBooking = () => {
       alert("Error booking seats: " + error.message);
     }
   };
-  
-  
 
   if (error) return <p style={{ color: "red" }}>{error}</p>;
   if (!event) return <p>Loading event details...</p>;
@@ -79,64 +80,63 @@ const EventBooking = () => {
     }
     return renderAuditoriumLayout(seatingLayout);
   };
-  
 
   const renderAuditoriumLayout = (layout) => {
-    const rows = Math.max(...layout.map((seat) => seat.row));
-    const columns = Math.max(...layout.map((seat) => seat.column));
+    const getRowLabel = (rowNum) => String.fromCharCode(64 + rowNum);
   
-    const getRowLabel = (rowNum) => String.fromCharCode(64 + rowNum); // 1 -> A
+    const groupedByType = { gold: {}, vip: {}, normal: {} };
   
-    // Create a map for faster lookup
-    const seatMap = {};
+    // Grouping seats by type
     layout.forEach((seat) => {
-      seatMap[`${seat.row}-${seat.column}`] = seat;
+      const { type = "normal", row } = seat;
+      if (!groupedByType[type][row]) groupedByType[type][row] = [];
+      groupedByType[type][row].push(seat);
     });
-    <div style={{ marginBottom: "1rem" }}>
-    <span className="seat" style={{ backgroundColor: "#eee" }}>Available</span>{" "}
-    <span className="seat" style={{ backgroundColor: "#5cb85c", color: "white" }}>Selected</span>{" "}
-    <span className="seat" style={{ backgroundColor: "#d9534f", color: "white" }}>Booked</span>
-  </div>
+  
+    const renderSection = (seatsByRow, label) => {
+      const sortedRows = Object.keys(seatsByRow).sort((a, b) => a - b);
+  
+      return (
+        <div className="seat-section">
+          <h3>{label} Section</h3>
+          {sortedRows.map((rowKey) => {
+            const row = parseInt(rowKey);
+            const seats = seatsByRow[row].sort((a, b) => a.column - b.column);
+  
+            return (
+              <div key={row} className="seat-row">
+                {seats.map((seat) => {
+                  const seatLabel = `${getRowLabel(seat.row)}${seat.column}`;
+                  const isSelected = selectedSeats.includes(seat.id);
+  
+                  return (
+                    <div
+                      key={seat.id}
+                      className={`seat ${seat.occupied ? "occupied" : ""} ${isSelected ? "selected" : ""} ${seat.type}`}
+                      onClick={() => !seat.occupied && handleSeatClick(seat.id)}
+                      title={`Seat ${seatLabel} - ${seat.type.toUpperCase()}`} // Show seat type on hover
+                    >
+                      {seatLabel}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      );
+    };
   
     return (
       <div className="auditorium-layout">
-        {Array.from({ length: rows }).map((_, rowIndex) => (
-          <div key={rowIndex} className="seat-row">
-            {Array.from({ length: columns }).map((_, colIndex) => {
-              const row = rowIndex + 1;
-              const col = colIndex + 1;
-              const seatKey = `${row}-${col}`;
-              const seat = seatMap[seatKey] || {
-                id: `${row}-${col}`,
-                row,
-                column: col,
-                occupied: false,
-              };
-  
-              const seatLabel = `${getRowLabel(row)}${col}`;
-              const isSelected = selectedSeats.includes(seat.id);
-  
-              return (
-                <div
-                  key={seat.id}
-                  className={`seat ${seat.occupied ? "occupied" : ""} ${
-                    isSelected ? "selected" : ""
-                  }`}
-                  onClick={() =>
-                    !seat.occupied && handleSeatClick(seat.id)
-                  }
-                >
-                  {seatLabel}
-                </div>
-              );
-            })}
-          </div>
-        ))}
+        {renderSection(groupedByType.gold, "Gold")}
+        {renderSection(groupedByType.vip, "VIP")}
+        {renderSection(groupedByType.normal, "Normal")}
       </div>
     );
   };
   
-  
+
   return (
     <div>
       <h1>{event.eventName}</h1>
