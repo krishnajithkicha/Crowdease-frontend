@@ -92,25 +92,39 @@
     margin-bottom: 30px;
   }
   
+  .seat-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  
+  .seat {
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    border: 1px solid #ccc;
+    font-weight: bold;
+  }
+  
   .seat.gold {
     background-color: gold;
   }
   
   .seat.vip {
-    background-color: palevioletred;
+    background-color: orange;
   }
   
   .seat.normal {
-    background-color: lightgreen;
+    background-color: green;
   }
   
   .seat.occupied {
-    background-color:red;
+    background-color: red !important;
     cursor: not-allowed;
   }
   
   .seat.selected {
-    border: 2px solid black;
-    outline: 2px solid blue;
+    background-color: blue !important;
   }
   

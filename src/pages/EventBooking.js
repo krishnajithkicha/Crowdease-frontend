@@ -59,10 +59,14 @@ const EventBooking = () => {
       alert("Booking confirmed!");
       setSelectedSeats([]);
 
-      // Refetch event to show booked seats
-      const updatedEventRes = await fetch(`${API_URL}/api/events/${eventId}`);
+      const updatedEventRes = await fetch(`${API_URL}/api/events/${eventId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const updatedEvent = await updatedEventRes.json();
-      setEvent(updatedEvent);
+      setEvent(updatedEvent); // 👈 updates layout
+      
     } catch (error) {
       alert("Error booking seats: " + error.message);
     }
@@ -76,29 +80,34 @@ const EventBooking = () => {
 
   const renderSeats = () => {
     if (venueType === "stadium") {
-      return <p>Stadium layout coming soon!</p>; // placeholder
+      return <p>Stadium layout coming soon!</p>;
     }
     return renderAuditoriumLayout(seatingLayout);
   };
 
   const renderAuditoriumLayout = (layout) => {
     const getRowLabel = (rowNum) => String.fromCharCode(64 + rowNum);
-  
     const groupedByType = { gold: {}, vip: {}, normal: {} };
   
-    // Grouping seats by type
     layout.forEach((seat) => {
       const { type = "normal", row } = seat;
       if (!groupedByType[type][row]) groupedByType[type][row] = [];
       groupedByType[type][row].push(seat);
     });
   
+    const getSeatColor = (seat) => {
+      if (seat.occupied) return "red";
+      if (selectedSeats.includes(seat.id)) return "blue";
+      if (seat.type === "gold") return "gold";
+      if (seat.type === "vip") return "orange";
+      return "green";
+    };
+  
     const renderSection = (seatsByRow, label) => {
       const sortedRows = Object.keys(seatsByRow).sort((a, b) => a - b);
-  
       return (
         <div className="seat-section">
-          <h3>{label} Section</h3>
+          <h3>{label.toUpperCase()} Section</h3>
           {sortedRows.map((rowKey) => {
             const row = parseInt(rowKey);
             const seats = seatsByRow[row].sort((a, b) => a.column - b.column);
@@ -114,7 +123,15 @@ const EventBooking = () => {
                       key={seat.id}
                       className={`seat ${seat.occupied ? "occupied" : ""} ${isSelected ? "selected" : ""} ${seat.type}`}
                       onClick={() => !seat.occupied && handleSeatClick(seat.id)}
-                      title={`Seat ${seatLabel} - ${seat.type.toUpperCase()}`} // Show seat type on hover
+                      title={`Seat ${seatLabel} - ${seat?.section?.toUpperCase?.() || "UNKNOWN"} }`}
+                      style={{
+                        backgroundColor: getSeatColor(seat),
+                        color: "#fff",
+                        borderRadius: "4px",
+                        padding: "5px",
+                        margin: "2px",
+                        cursor: seat.occupied ? "not-allowed" : "pointer"
+                      }}
                     >
                       {seatLabel}
                     </div>
