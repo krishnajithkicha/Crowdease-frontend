@@ -16,6 +16,9 @@ import EventListing from "./pages/EventListing";
 import Management from "./pages/Management";
 import EventView from "./pages/EventView";
 import EventBooking from "./pages/EventBooking";
+import TicketPage from "./pages/TicketPage.js";
+import TicketView from "./pages/TicketView.js";
+import AdminManagement from "./pages/AdminManagement.js";
 import PrivateRoute from "./PrivateRoute";
 
 const RedirectBasedOnRole = () => {
@@ -27,6 +30,9 @@ const RedirectBasedOnRole = () => {
         if (!user) return;
 
         const allowedPaths = [
+            "/admmanagement",
+            "ticket-view",
+            "/ticket/:ticketId",
             /^\/event-book\/[^/]+$/,
             "/attendee",
             "/event-view",
@@ -161,6 +167,30 @@ const App = () => {
                             </PrivateRoute>  
                         }
                     />  
+                    <Route  
+                        path="/ticket/:ticketId"  
+                        element={  
+                            <PrivateRoute allowedRoles={["Attendee"]}>  
+                                <TicketPage />  
+                            </PrivateRoute>  
+                        }
+                    />
+                    <Route  
+                        path="/ticket-view"  
+                        element={  
+                            <PrivateRoute allowedRoles={["Attendee"]}>  
+                                <TicketView />  
+                            </PrivateRoute>  
+                        }
+                    />
+                    <Route  
+                        path="/admmanagement"  
+                        element={  
+                            <PrivateRoute allowedRoles={["Admin"]}>  
+                                <AdminManagement />  
+                            </PrivateRoute>  
+                        }
+                    />
                     <Route path="/" element={<HomePage />} />
                     <Route path="/contact" element={<ContactPage />} />
                 </Routes>

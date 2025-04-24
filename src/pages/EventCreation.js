@@ -5,6 +5,11 @@ import "./EventCreation.css";
 const EventCreation = () => {
   const navigate = useNavigate();
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+  const [entrances, setEntrances] = useState([]);
+const [exits, setExits] = useState([]);
+const [entryInput, setEntryInput] = useState({ row: "", col: "" });
+const [exitInput, setExitInput] = useState({ row: "", col: "" });
+
 
   const [eventDetails, setEventDetails] = useState({
     eventName: "",
@@ -97,6 +102,9 @@ const EventCreation = () => {
     } catch (error) {
       setError("Network error. Please try again.");
     }
+    formData.append("entrances", JSON.stringify(entrances));
+formData.append("exits", JSON.stringify(exits));
+
   };
 
   return (
@@ -307,7 +315,60 @@ const EventCreation = () => {
                 </li>
               ))}
             </ul>
-          )}
+          )}<h3>Entrances</h3>
+          <input
+            type="number"
+            placeholder="Row"
+            value={entryInput.row}
+            onChange={(e) => setEntryInput({ ...entryInput, row: e.target.value })}
+          />
+          <input
+            type="number"
+            placeholder="Column"
+            value={entryInput.col}
+            onChange={(e) => setEntryInput({ ...entryInput, col: e.target.value })}
+          />
+          <button type="button" onClick={() => {
+            if (entryInput.row && entryInput.col) {
+              setEntrances([...entrances, { row: parseInt(entryInput.row), col: parseInt(entryInput.col) }]);
+              setEntryInput({ row: "", col: "" });
+            }
+          }}>
+            Add Entrance
+          </button>
+          <ul>
+            {entrances.map((e, i) => (
+              <li key={i}>Entrance at Row {e.row}, Col {e.col}</li>
+            ))}
+          </ul>
+          
+          <h3>Exits</h3>
+          <input
+            type="number"
+            placeholder="Row"
+            value={exitInput.row}
+            onChange={(e) => setExitInput({ ...exitInput, row: e.target.value })}
+          />
+          <input
+            type="number"
+            placeholder="Column"
+            value={exitInput.col}
+            onChange={(e) => setExitInput({ ...exitInput, col: e.target.value })}
+          />
+          <button type="button" onClick={() => {
+            if (exitInput.row && exitInput.col) {
+              setExits([...exits, { row: parseInt(exitInput.row), col: parseInt(exitInput.col) }]);
+              setExitInput({ row: "", col: "" });
+            }
+          }}>
+            Add Exit
+          </button>
+          <ul>
+            {exits.map((e, i) => (
+              <li key={i}>Exit at Row {e.row}, Col {e.col}</li>
+            ))}
+          </ul>
+          
 
           <button type="submit">Submit Event</button>
         </form>
