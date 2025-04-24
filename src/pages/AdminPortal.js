@@ -20,7 +20,7 @@ const AdminPortal = () => {
         <div className="logo"></div> {/* Logo with background image */}
         <div className="admin-title">ADMIN PORTAL</div>
         <nav className="nav">
-          <button onClick={() => navigate("/management")}>Management</button>
+          <button onClick={() => navigate("/admmanagement")}>Management</button>
           <button onClick={() => navigate("/analytics")}>Analytics</button>
           <button onClick={() => navigate("/notifications")}>Notifications</button>
           <button onClick={() => navigate("/security")}>Security</button>

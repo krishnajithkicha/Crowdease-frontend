@@ -58,73 +58,72 @@
   .book-button:hover {
     background: #e64a19;
   }
-  .auditorium-layout {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  .auditorium-grid {
     margin: 20px 0;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .seat {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  
+  .seat-section {
+    margin-bottom: 20px;
+    text-align: center;
   }
   
   .seat-row {
     display: flex;
-    gap: 8px;
     justify-content: center;
+    margin-bottom: 10px;
   }
   
   .seat {
     width: 40px;
     height: 40px;
-    border: 1px solid #ccc;
-    margin: 4px;
-    text-align: center;
-    line-height: 40px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-weight: bold;
-  }
-  
-  .seat-row {
     display: flex;
-    margin-bottom: 10px;
-  }
-  
-  .seat-section {
-    margin-bottom: 30px;
-  }
-  
-  .seat-row {
-    display: flex;
+    align-items: center;
     justify-content: center;
-    margin-bottom: 8px;
-  }
-  
-  .seat {
-    width: 35px;
-    height: 35px;
-    text-align: center;
-    line-height: 35px;
-    border: 1px solid #ccc;
     font-weight: bold;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
   }
   
-  .seat.gold {
-    background-color: gold;
+  .seat:hover {
+    transform: scale(1.1);
+  }
+  .seat.path {
+    background-color: #4fc3f7 !important; /* Path color */
+    border: 2px solid #007bb5; /* Optional border for emphasis */
+  }
+  .auditorium-map-container {
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    background-color:gray;
   }
   
-  .seat.vip {
-    background-color: orange;
+  .seat:hover {
+    outline: 2px solid #ffffffaa;
+    transition: all 0.2s ease-in-out;
   }
-  
-  .seat.normal {
-    background-color: green;
-  }
-  
-  .seat.occupied {
-    background-color: red !important;
-    cursor: not-allowed;
-  }
-  
-  .seat.selected {
-    background-color: blue !important;
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 8px 2px #ffee58;
+    }
+    50% {
+      box-shadow: 0 0 10px 6px #fff176;
+    }
+    100% {
+      box-shadow: 0 0 8px 2px #ffee58;
+    }
   }
   

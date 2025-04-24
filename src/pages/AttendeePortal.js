@@ -16,6 +16,10 @@ const AttendeePortal = () => {
   const handleBookTickets = () => {
     navigate("/event-view"); // ✅ Navigate to the event-view page
   };
+  const handleViewTickets = () => {
+    navigate("/ticket-view"); // Navigate to the TicketView page
+  };
+
 
   return (
     <div className="attendee-portal">
@@ -28,7 +32,9 @@ const AttendeePortal = () => {
         <nav className="nav">
           <button className="nav-button">HOME</button>
           <button className="nav-button">TRENDING</button>
-          <button className="nav-button">EVENTS</button>
+          <button className="nav-button" onClick={handleViewTickets}>
+            MY TICKETS
+          </button>
           <button className="nav-button">UPCOMING</button>
           <button className="nav-button logout" onClick={handleLogout}>
             LOG OUT
